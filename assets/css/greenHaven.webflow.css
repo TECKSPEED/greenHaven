@@ -1391,6 +1391,24 @@ a img.aligncenter {
     padding-top:40px;
 }
 
+.subpage-container ul.strain-bargraph {
+    padding:0px;
+}
+
+.subpage-container ul.strain-bargraph li {
+    height: 35px;
+    color: white;
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 35px;
+    padding: 0px 10px;
+    margin-bottom: 5px;
+    background-color: #4ab95b;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
 @media (min-width: 992px) {
     nav ul li.showing ul {
         display: block;
@@ -1809,6 +1827,10 @@ a img.aligncenter {
     }
 }
 @media (max-width: 479px) {
+    .subpage-container ul.strain-bargraph li {
+        min-width: 40%;
+    }
+
     h2 {
         font-size: 24px;
         line-height: 28px;

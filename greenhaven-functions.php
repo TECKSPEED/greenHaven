@@ -72,6 +72,67 @@ if ( ! function_exists('strains') ) {
 
 }
 
+function straininformation( $meta_boxes ) {
+	$prefix = '';
+
+	$meta_boxes[] = array(
+		'id' => 'straininformation',
+		'title' => esc_html__( 'Strain Information', 'greenHaven' ),
+		'post_types' => array( 'strains' ),
+		'context' => 'normal',
+		'priority' => 'default',
+		'autosave' => true,
+		'fields' => array(
+			array(
+				'id' => $prefix . 'aroma',
+				'type' => 'text',
+				'name' => esc_html__( 'Aroma', 'greenHaven' ),
+				'desc' => esc_html__( 'Enter the Aroma this strain gives off', 'greenHaven' ),
+				'placeholder' => esc_html__( 'Grape and Berry', 'greenHaven' ),
+			),
+			array(
+				'id' => $prefix . 'lineage',
+				'type' => 'text',
+				'name' => esc_html__( 'Lineage', 'greenHaven' ),
+				'desc' => esc_html__( 'Enter the Lineage of the strain (aka the two parent strains used to create this strain) )', 'greenHaven' ),
+			),
+			array(
+				'id' => $prefix . 'straincolor',
+				'name' => esc_html__( 'Strain Color', 'greenHaven' ),
+				'type' => 'select',
+				'desc' => esc_html__( 'Choose whether this strain is an Indica, Sativa, or a hybrid', 'greenHaven' ),
+				'placeholder' => esc_html__( 'Select an Item', 'greenHaven' ),
+				'options' => array(
+					'789bd1' => 'Indica',
+					'e97777' => 'Sativa',
+					'bd77e9' => 'Hybrid',
+				),
+			),
+			array(
+				'id' => $prefix . 'straineffect',
+				'type' => 'text',
+				'name' => esc_html__( 'Strain Effects', 'greenHaven' ),
+				'desc' => esc_html__( 'Add the effects of the strain followed by the percentage of how strong the effect can be. The first effect maps directly to the first percentage and so on. This is used to generate the horizontal bar chart on a single strain page', 'greenHaven' ),
+				'clone' => true,
+				'max_clone' => 10,
+				'add_button' => esc_html__( 'Next Effect', 'greenHaven' ),
+			),
+			array(
+				'id' => $prefix . 'straineffectpercentage',
+				'type' => 'text',
+				'name' => esc_html__( 'Strain Effect Percentage', 'greenHaven' ),
+				'desc' => esc_html__( 'The percentage of how strong the strain effect can be', 'greenHaven' ),
+				'clone' => true,
+				'max_clone' => 10,
+				'add_button' => esc_html__( 'Next Percentage', 'greenHaven' ),
+			),
+		),
+	);
+
+	return $meta_boxes;
+}
+add_filter( 'rwmb_meta_boxes', 'straininformation' );
+
 //Retailers CPT
 if ( ! function_exists('Retailers') ) {
 
@@ -225,7 +286,7 @@ function our_strains() { ?>
                     $loop = new WP_Query( $args );
                     while ( $loop->have_posts() ) : $loop->the_post(); ?>
                         <?php
-                            $border_color = get_field('strain_color');
+                            $border_color = rwmb_meta('straincolor');
                         ?>
                         <div class="strain-container">
                             <a href="<?php echo get_permalink() ?>">
