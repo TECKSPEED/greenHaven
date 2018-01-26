@@ -4,26 +4,9 @@ Template Name: About Us
 */
 global $post;
 
-//* ADVANCED CUSTOM FIELDS
-$hero_title	= get_field('hero_title');
-$hero_supporting_text = get_field('hero_supporting_text');
-$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' );
 
 get_header(); ?>
-<div class="w-section home-main" style="  background-color: #00573c;
-	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo $src[0]; ?>');
-	background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo $src[0]; ?>');
-	background-size: auto, cover;
-	background-repeat: repeat, no-repeat;
-	background-position: center center;" >
-	<div class="w-container hero-container">
-		<h1 class="hero-h1"><?php echo $hero_title; ?></h1>
-		<p class="hero-supporting-text"><?php echo $hero_supporting_text; ?></p>
-		<?php if (!($button_text == "")) {?>
-            <a class="button" href="<?php echo $button_link; ?>"><?php echo $button_text; ?></a>
-		<?php } ?>
-	</div>
-</div>
+<?php echo get_hero(); ?>
 <div class="breadcrumb-container">
 	<div class="w-container breadcrumbs">
 		<?php breadcrumbs(); ?>

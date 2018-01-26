@@ -285,9 +285,11 @@ nav ul li ul li:hover {
   font-weight: 400;
 }
 .hero-container {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  text-align: center;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .product-hero-container {
@@ -315,7 +317,7 @@ nav ul li ul li:hover {
     height: initial;
     font-weight: 300;
     text-align: center;
-    padding-right: 25px;
+    padding: 10px;
     vertical-align: middle;
 }
 
@@ -1702,7 +1704,7 @@ a img.aligncenter {
     }
     .home-main {
         height: 400px;
-        padding-top: 100px;
+        padding-top: 0px;
         padding-right: 20px;
         padding-left: 20px;
         /*background-position: 0% 0%, 82% 76px;*/
@@ -1749,7 +1751,7 @@ a img.aligncenter {
     .hero-supporting-text {
         padding-right: 20px;
         padding-left: 20px;
-        font-size: 20px;
+        font-size: 15px;
         line-height: 24px;
     }
     .logo-block {
@@ -1825,6 +1827,25 @@ a img.aligncenter {
     .right{
         width:100%;
     }
+
+    .footer li {
+        list-style-type: none;
+        text-align: center;
+        padding-top: 0px;
+    }
+
+    .footer li:last-child {
+        padding-bottom: 20px;
+    }
+
+    .footer ul {
+        padding-top:20px;
+        text-align:center;
+    }
+
+    .address {
+        text-align: center;
+    }
 }
 @media (max-width: 479px) {
     .subpage-container ul.strain-bargraph li {
@@ -1852,8 +1873,9 @@ a img.aligncenter {
     }
     .home-main {
         height: 400px;
-        padding-top: 90px;
+        padding:0px;
         background-position: 0% 0%, 50% 40px;
+        margin-top: 15px;
     }
     .home-main.sub-main {
         padding-top: 120px;
@@ -1879,6 +1901,7 @@ a img.aligncenter {
     .hero-supporting-text {
         padding-right: 10px;
         padding-left: 10px;
+        font-size:14px;
     }
     .action-menu-container {
         margin-top: 40px;
@@ -1892,8 +1915,16 @@ a img.aligncenter {
     }
     .address {
         margin-top: 10px;
-        text-align: left;
+        text-align: center;
     }
+
+    .address-title {
+        text-align:center;
+        color: white;
+        padding: 0px;
+        margin: 0px;
+    }
+
     .pre-footer {
         padding: 20px;
     }

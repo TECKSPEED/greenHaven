@@ -195,34 +195,49 @@ if ( ! function_exists('Retailers') ) {
 
 }
 
-// GET FEATURED IMAGE
-function ST4_get_featured_image($post_ID) {
-	$post_featured =  get_field('featured_retailer', $post_ID);
-	if ($post_featured) {
-		return $post_featured;
-	}
-}
-// ADD NEW COLUMN
-function ST4_columns_head($defaults) {
-	$defaults['featured_retailer'] = 'Featured Retailer';
-	return $defaults;
-}
 
-// SHOW THE FEATURED IMAGE
-function ST4_columns_content($column_name, $post_ID) {
-	if ($column_name == 'featured_retailer') {
-		$post_featured = get_field('featured_retailer', $post_ID);
-		if ($post_featured) {
-			echo  '<p><em>Featured</em></p>';
-		}
-		else {
-		    echo 'Not Featured';
-        }
-	}
-}
+function your_prefix_get_meta_box( $meta_boxes ) {
+	$prefix = 'prefix-';
 
-add_filter('manage_posts_columns', 'ST4_columns_head');
-add_action('manage_posts_custom_column', 'ST4_columns_content', 10, 2);
+	$meta_boxes[] = array(
+		'id' => 'hero',
+		'title' => esc_html__( 'Hero Information', 'metabox-online-generator' ),
+		'post_types' => array( 'page' ),
+		'context' => 'side',
+		'priority' => 'default',
+		'autosave' => false,
+		'fields' => array(
+			array(
+				'id' => $prefix . 'hero_title',
+				'type' => 'text',
+				'name' => esc_html__( 'Hero Title', 'metabox-online-generator' ),
+				'desc' => esc_html__( 'Enter a hero title here. If left blank the page title will be used', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'hero_supporting_text',
+				'type' => 'textarea',
+				'name' => esc_html__( 'Hero Supporting Text', 'metabox-online-generator' ),
+				'desc' => esc_html__( 'Enter a short sentance about the page or some other relevant context', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'button_text',
+				'type' => 'text',
+				'name' => esc_html__( 'Button Text', 'metabox-online-generator' ),
+				'desc' => esc_html__( 'What woudl you like the button to say?', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'button_link',
+				'type' => 'post',
+				'name' => esc_html__( 'Button Link', 'metabox-online-generator' ),
+				'post_type' => 'page',
+				'field_type' => 'select',
+			),
+		),
+	);
+
+	return $meta_boxes;
+}
+add_filter( 'rwmb_meta_boxes', 'your_prefix_get_meta_box' );
 
 function our_strains() { ?>
     <script>
@@ -452,11 +467,12 @@ add_action('wp_ajax_filter_posts', 'ajax_filter_get_posts');
 add_action('wp_ajax_nopriv_filter_posts', 'ajax_filter_get_posts');
 
 function get_hero() {
-	//* ADVANCED CUSTOM FIELDS
-	$hero_title	= get_field('hero_title');
-	$hero_supporting_text = get_field('hero_supporting_text');
-	$button_link = get_field('button_link');
-	$button_text = get_field('button_text');
+
+	$hero_title = rwmb_meta( 'prefix-hero_title' );
+	$hero_supporting_text = rwmb_meta( 'prefix-hero_supporting_text' );
+	$button_link = rwmb_meta( 'prefix-button_link' );
+	$button_text = rwmb_meta( 'prefix-button_text' );
+
     global $post;
     $src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), array( 5600,1000 ), false, '' ); ?>
     <div class="w-section home-main" style="  background-color: #00573c;
