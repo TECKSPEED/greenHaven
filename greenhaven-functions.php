@@ -61,6 +61,7 @@ if ( ! function_exists('strains') ) {
 			'has_archive'           => true,
 			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
+			'menu-icon'             => 'dashicons-palmtree',
 			// This is where we add taxonomies to our CPT
 			'taxonomies'          => array( 'post_tag' ),
 			'capability_type'       => 'page',
