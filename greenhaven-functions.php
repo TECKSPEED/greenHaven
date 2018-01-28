@@ -80,7 +80,7 @@ function straininformation( $meta_boxes ) {
 		'id' => 'straininformation',
 		'title' => esc_html__( 'Strain Information', 'greenHaven' ),
 		'post_types' => array( 'strains' ),
-		'context' => 'normal',
+		'context' => 'side',
 		'priority' => 'default',
 		'autosave' => true,
 		'fields' => array(
@@ -197,7 +197,7 @@ if ( ! function_exists('Retailers') ) {
 }
 
 
-function your_prefix_get_meta_box( $meta_boxes ) {
+function hero_information( $meta_boxes ) {
 	$prefix = 'prefix-';
 
 	$meta_boxes[] = array(
@@ -238,7 +238,7 @@ function your_prefix_get_meta_box( $meta_boxes ) {
 
 	return $meta_boxes;
 }
-add_filter( 'rwmb_meta_boxes', 'your_prefix_get_meta_box' );
+add_filter( 'rwmb_meta_boxes', 'hero_information' );
 
 function our_strains() { ?>
     <script>
@@ -358,14 +358,14 @@ function weekly_retailer() { ?>
 		            'paged' => $paged
 	            )); ?>
 	            <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-                <div class="w-col w-col-6 retailer-background retailer-half" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo get_the_post_thumbnail_url('', 'full'); ?>'); ">
+                <div class="w-col w-col-6 featured-retailer-background retailer-half" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo get_the_post_thumbnail_url('', 'full'); ?>'); ">
                         <div class="w-section">
                             <div class="retailer-container">
                                 <div id="post-<?php the_ID(); ?>" class="cpt">
-                                    <h2 class="retailer-title"><?php the_title(); ?></h2>
-                                    <p class="retailer-address"><?php echo get_field('retailer_address') ?></p>
+                                    <h2 class="featured-retailer-title"><?php the_title(); ?></h2>
+                                    <p class="featured-retailer-address"><?php echo get_field('retailer_address') ?></p>
                                     <div class="green-line"></div>
-                                    <a href="tel:<?php echo get_field('retailer_phone_number'); ?>"><p class="retailer-phone"><?php echo get_field('retailer_phone_number'); ?></p></a>
+                                    <a href="tel:<?php echo get_field('retailer_phone_number'); ?>"><p class="featured-retailer-phone"><?php echo get_field('retailer_phone_number'); ?></p></a>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +426,7 @@ function ajax_filter_get_posts( $taxonomy ) {
 	$query = new WP_Query( $args );
 
 	if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
-		$border_color = get_field('strain_color'); ?>
+		$border_color = rwmb_meta('strain_color'); ?>
         <div class="strain-list-container">
             <div class="w-col w-col-3 strain-container">
                 <a href="<?php echo get_permalink() ?>">
@@ -446,7 +446,7 @@ function ajax_filter_get_posts( $taxonomy ) {
 			$loop = new WP_Query( $args );
 			while ( $loop->have_posts() ) : $loop->the_post(); ?>
 				<?php
-				$border_color = get_field('strain_color');
+				$border_color = rwmb_meta('strain_color');
 				?>
                 <div class="w-col w-col-3 strain-container">
                     <a href="<?php echo get_permalink() ?>">

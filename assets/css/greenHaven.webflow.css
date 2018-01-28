@@ -427,7 +427,7 @@ nav ul li ul li:hover {
     color:white;
 }
 
-.retailer-title {
+.featured-retailer-title {
     color: white;
     font-size: 45px;
     line-height: 62px;
@@ -436,7 +436,7 @@ nav ul li ul li:hover {
     text-transform: none;
 }
 
-.retailer-background {
+.featured-retailer-background {
     padding-top: 40px;
     padding-bottom: 20px;
     background-color: #e29631;
@@ -705,7 +705,7 @@ nav ul li ul li:hover {
     padding-bottom: 40px;
 }
 
-.retailer-address, .retailer-phone {
+.featured-retailer-address, .featured-retailer-phone {
     font-size: 18px;
     color: white;
     font-weight:300;

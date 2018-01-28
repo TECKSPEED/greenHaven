@@ -3,16 +3,6 @@
 Template Name: Contact Us
  */
 
-$body_copy_below_cta = get_field('body_below_cta');
-$showCTAbox = get_field('show_cta_box');
-$heroSupportText = get_field('hero_line');
-
-$calloutTitle = get_field('callout_title');
-$calloutText = get_field('callout_text');
-$calloutCTAtitle = get_field('callout_cta_title');
-$calloutLink = get_field('callout_link');
-
-
 get_header();
 get_hero(); ?>
     <div class="w-section action-menu">

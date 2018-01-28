@@ -22,7 +22,7 @@ get_hero(); ?>
 				$loop = new WP_Query( $args );
 				while ( $loop->have_posts() ) : $loop->the_post(); ?>
 					<?php
-					$border_color = get_field('strain_color');
+					$border_color = rwmb_meta('strain_color');
 					?>
 					<div class="w-col w-col-3 strain-container">
 						<a href="<?php echo get_permalink() ?>">

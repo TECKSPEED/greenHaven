@@ -64,16 +64,19 @@ get_product_hero(); ?>
             </div>
             <div class="w-row">
                 <div class="w-col w-col-12 strain-chart-container">
-                    <h2 class="title-h2">Strain Effects</h2>
-                    <ul class="strain-bargraph">
-                        <?php
-                        $strainEffects = rwmb_meta( 'straineffect' );
-                        $strainEffectsPercentage = rwmb_meta( 'straineffectpercentage' );
+                    <?php
+                    $strainEffects = rwmb_meta( 'straineffect' );
+                    if(!(sizeOf($strainEffects) == 0)) { ?>
+                        <h2 class="title-h2">Strain Effects</h2>
+                        <ul class="strain-bargraph">
+                            <?php
+                            $strainEffectsPercentage = rwmb_meta( 'straineffectpercentage' );
 
-                        for ($i = 0; $i< count($strainEffects); $i++) { ?>
-                            <li style="width:<?php echo $strainEffectsPercentage[$i] ?>%"><?php echo $strainEffects[$i] ?></li>
-                        <?php } ?>
+                            for ($i = 0; $i< count($strainEffects); $i++) { ?>
+                                <li style="width:<?php echo $strainEffectsPercentage[$i] ?>%"><?php echo $strainEffects[$i] ?></li>
+                            <?php } ?>
                     </ul>
+                    <?php } ?>
                 </div>
             </div>
 	    <?php endwhile; ?>

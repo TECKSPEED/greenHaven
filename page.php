@@ -12,16 +12,6 @@
  * @package greenHaven
  */
 
-$body_copy_below_cta = get_field('body_below_cta');
-$showCTAbox = get_field('show_cta_box');
-$heroSupportText = get_field('hero_line');
-
-$calloutTitle = get_field('callout_title');
-$calloutText = get_field('callout_text');
-$calloutCTAtitle = get_field('callout_cta_title');
-$calloutLink = get_field('callout_link');
-
-
 get_header();
 get_hero(); ?>
     <div class="w-section action-menu">
@@ -34,17 +24,6 @@ get_hero(); ?>
         <?php if (have_posts()) : ?>
             <?php while (have_posts()) : the_post(); ?>
                 <?php the_content('Read the rest of this entry »'); ?>
-                <?php if ($showCTAbox = get_field('show_cta_box')) { ?>
-                    <div class="cta-block">
-                        <h3 class="cta-block-h3"><?php echo $calloutTitle ?></h3>
-                        <p class="cta-text"><?php echo $calloutText ?></p>
-                        <div class="button-container">
-                            <a class="button red featured-cta-button" href="<?php echo $calloutLink ?>" target="_blank"><?php echo $calloutCTAtitle ?></a>
-                        </div>
-                    </div>
-                <?php } ?>
-
-                <?php echo $body_copy_below_cta ?>
             <?php endwhile; ?>
         <?php endif; ?>
         <!--<div class="content-cta-container">
