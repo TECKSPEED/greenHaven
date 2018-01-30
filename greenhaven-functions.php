@@ -326,9 +326,9 @@ function instafeed() { ?>
 
 function contactUs() { ?>
 	<?php
-		$button_link = get_field('button_link');
-		$callout_button_text = get_field('callout_button_text');
-		$callout_saying = get_field('callout_saying');
+		$button_link = rwmb_meta('button_link');
+		$callout_button_text = rwmb_meta('callout_button_text');
+		$callout_saying = rwmb_meta('callout_saying');
 	?>
 	<div class="w-section contact-us">
 		<div class="w-container ">
@@ -363,21 +363,25 @@ function weekly_retailer() { ?>
                             <div class="retailer-container">
                                 <div id="post-<?php the_ID(); ?>" class="cpt">
                                     <h2 class="featured-retailer-title"><?php the_title(); ?></h2>
-                                    <p class="featured-retailer-address"><?php echo get_field('retailer_address') ?></p>
+                                    <p class="featured-retailer-address"><?php echo rwmb_meta('retailer_address') ?></p>
                                     <div class="green-line"></div>
-                                    <a href="tel:<?php echo get_field('retailer_phone_number'); ?>"><p class="featured-retailer-phone"><?php echo get_field('retailer_phone_number'); ?></p></a>
+                                    <a href="tel:<?php echo rwmb_meta('retailer_phone_number'); ?>"><p class="featured-retailer-phone"><?php echo rwmb_meta('retailer_phone_number'); ?></p></a>
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="w-col w-col-6 retailer-half">
                     <?php
-	                $location = get_field('retailer_location');
-	                if( !empty($location) ): ?>
-                        <div class="acf-map">
-                            <div class="marker" data-lat="<?php echo $location['lat']; ?>" data-lng="<?php echo $location['lng']; ?>"></div>
-                        </div>
-	                <?php endif; ?>
+                    $args = array(
+	                    'width'        => '100%',
+	                    'height'       => '400px',
+	                    'zoom'         => 14,
+	                    'marker'       => true,
+	                    'marker_title' => 'Click me',
+	                    'info_window'  => '<h3>Title</h3><p>Content</p>.',
+                    );
+                    echo rwmb_meta( 'retailer_map_location', $args );
+                    ?>
                 </div>
 	            <?php endwhile; ?>
 	            <?php wp_reset_query(); ?>
@@ -523,4 +527,71 @@ function add_featured_galleries_to_ctp( $post_types ) {
     return array('strains');
 }
 add_filter('fg_post_types', 'add_featured_galleries_to_ctp' );
+
+function featured_retailer( $meta_boxes ) {
+	$prefix = '';
+
+	$meta_boxes[] = array(
+		'id' => 'featured_retailer',
+		'title' => esc_html__( 'Featured Retailer', 'Featured Retailer' ),
+		'post_types' => array( 'retailers' ),
+		'context' => 'side',
+		'priority' => 'default',
+		'autosave' => false,
+		'fields' => array(
+			array(
+				'id' => $prefix . 'featured_retailer',
+				'name' => esc_html__( 'Featured Retailer', 'Featured Retailer' ),
+				'type' => 'checkbox',
+				'desc' => esc_html__( 'Check this to make this your retailer of the week', 'Featured Retailer' ),
+			),
+		),
+	);
+
+	return $meta_boxes;
+}
+add_filter( 'rwmb_meta_boxes', 'featured_retailer' );
+
+function retailer_information( $meta_boxes ) {
+	$prefix = '';
+
+	$meta_boxes[] = array(
+		'id' => 'retailer_information',
+		'title' => esc_html__( 'Retailer Information', 'metabox-online-generator' ),
+		'post_types' => array( 'retailers' ),
+		'context' => 'normal',
+		'priority' => 'default',
+		'autosave' => false,
+		'fields' => array(
+			array(
+				'id' => $prefix . 'retailer_address',
+				'type' => 'textarea',
+				'name' => esc_html__( 'Retailer Address', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'retailer_phone_number',
+				'type' => 'text',
+				'name' => esc_html__( 'Retailer Phone Number', 'metabox-online-generator' ),
+				'desc' => esc_html__( 'Enter the phone number for the retailer', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'location_address',
+				'type' => 'text',
+				'name' => esc_html__( 'Retailer Address', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => $prefix . 'retailer_map_location',
+				'type' => 'map',
+				// Default location: 'latitude,longitude[,zoom]' (zoom is optional)
+				'std'           => '-6.233406,-35.049906,15',
+				'name' => esc_html__( 'Retailer Location', 'metabox-online-generator' ),
+				'address_field' => 'location_address',
+				'api_key' => 'AIzaSyCCAfEfZtd5LKpHX4nmZMYL2EgnOP_bq7I',
+			),
+		),
+	);
+
+	return $meta_boxes;
+}
+add_filter( 'rwmb_meta_boxes', 'retailer_information' );
 
