@@ -17,17 +17,19 @@ get_hero(); ?>
 				$args = array( 'post_type' => 'retailers', 'posts_per_page' => -1 );
 				$loop = new WP_Query( $args );
 				while ( $loop->have_posts() ) : $loop->the_post(); ?>
-					<div class="w-col w-col-3 retailer-container">
-						<a href="<?php echo get_permalink() ?>">
-							<div class="slide-content">
-								<img class="retailer-image" style="background-color: #<?php echo $border_color ?>; border: 5px solid #<?php echo $border_color ?>;" src="<?php echo the_post_thumbnail_url('thumbnail') ?>">
-								<p class="retailer-title"><?php the_title(); ?></p>
-							</div>
+
+						<a href="<?php echo get_permalink() ?>" class="retailer-container">
+                            <div class="w-col w-col-3 retailer-container">
+                                <div class="slide-content">
+                                    <img class="retailer-image" style="background-color: #<?php echo $border_color ?>; border: 5px solid #<?php echo $border_color ?>;" src="<?php echo the_post_thumbnail_url('thumbnail') ?>">
+                                    <p class="retailer-title"><?php the_title(); ?></p>
+                                </div>
+                            </div>
 						</a>
-					</div>
 				<?php endwhile; ?>
 			</div>
 			<?php wp_reset_query(); ?>
+            <?php echo do_shortcode('[wpsl]'); ?>
 		</div>
 	</div>
 </div>

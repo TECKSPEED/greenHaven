@@ -24,14 +24,14 @@ get_hero(); ?>
 					<?php
 					$border_color = rwmb_meta('strain_color');
 					?>
-					<div class="w-col w-col-3 strain-container">
-						<a href="<?php echo get_permalink() ?>">
+					<a href="<?php echo get_permalink() ?>">
+                        <div class="w-col w-col-3 strain-container">
 							<div class="slide-content">
 								<img class="strain-image" style="background-color: #<?php echo $border_color ?>; border: 5px solid #<?php echo $border_color ?>;" src="<?php echo the_post_thumbnail_url('thumbnail') ?>">
 								<p class="strain-title"><?php the_title(); ?></p>
 							</div>
-						</a>
-					</div>
+					    </div>
+                    </a>
 				<?php endwhile; ?>
 			</div>
 			<?php wp_reset_query(); ?>

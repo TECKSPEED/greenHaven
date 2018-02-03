@@ -611,13 +611,13 @@ nav ul li ul li:hover {
   text-align: center;
 }
 
-.strain-container {
+.strain-container, .retailer-container {
     opacity: 1;
     color:#333;
     padding-bottom: 30px;
 }
 
-.strain-container:hover {
+.strain-container:hover, .retailer-container:hover {
     opacity: .8;
     color: #e29631;
     transition: all .3s;
@@ -627,7 +627,7 @@ nav ul li ul li:hover {
     -webkit-transition: all .3s;
 }
 
-.strain-container:hover p {
+.strain-container:hover p, .retailer-container:hover p {
     color: #e29631;
     transition: all .3s;
     -ms-transition: all .3s;
@@ -636,7 +636,7 @@ nav ul li ul li:hover {
     -webkit-transition: all .3s;
 }
 
-.strain-image {
+.strain-image, .retailer-image {
     display: block;
     border-radius: 200px;
     box-sizing: border-box;
@@ -694,7 +694,7 @@ nav ul li ul li:hover {
     display: inline-block;
 }
 
-.strain-title {
+.strain-title, .retailer-title {
     font-size: 20px;
     text-align: center;
     color: #333;
