@@ -636,7 +636,7 @@ nav ul li ul li:hover {
     -webkit-transition: all .3s;
 }
 
-.strain-image {
+.strain-image, .retailer-image {
     display: block;
     border-radius: 200px;
     box-sizing: border-box;
@@ -703,6 +703,7 @@ nav ul li ul li:hover {
 .our-strains {
     padding-top: 20px;
     padding-bottom: 40px;
+    min-height: 225px;
 }
 
 .featured-retailer-address, .featured-retailer-phone {
@@ -934,10 +935,6 @@ a.quote-cta:hover {
 .slick-prev, .slick-next {
     background-color:#4ab95b;
     color: #4ab95b;
-}
-
-.retailer-container{
-    background:
 }
 
 /* Home page featured slider
