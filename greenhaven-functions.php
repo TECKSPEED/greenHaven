@@ -134,69 +134,6 @@ function straininformation( $meta_boxes ) {
 }
 add_filter( 'rwmb_meta_boxes', 'straininformation' );
 
-//Retailers CPT
-if ( ! function_exists('Retailers') ) {
-
-// Register Custom Post Type
-	function Retailers() {
-
-		$labels = array(
-			'name'                  => _x( 'Retailers', 'Post Type General Name', 'text_domain' ),
-			'singular_name'         => _x( 'Retailer', 'Post Type Singular Name', 'text_domain' ),
-			'menu_name'             => __( 'Retailers', 'text_domain' ),
-			'name_admin_bar'        => __( 'Retailers', 'text_domain' ),
-			'archives'              => __( 'Retailers Archives', 'text_domain' ),
-			'attributes'            => __( 'Retailer Attributes', 'text_domain' ),
-			'parent_item_colon'     => __( 'Parent Retailer:', 'text_domain' ),
-			'all_items'             => __( 'All Retailers', 'text_domain' ),
-			'add_new_item'          => __( 'Add New Retailer', 'text_domain' ),
-			'add_new'               => __( 'Add New Retailer', 'text_domain' ),
-			'new_item'              => __( 'New Retailer', 'text_domain' ),
-			'edit_item'             => __( 'Edit Retailer', 'text_domain' ),
-			'update_item'           => __( 'Update Retailer', 'text_domain' ),
-			'view_item'             => __( 'View Retailer', 'text_domain' ),
-			'view_items'            => __( 'View Retailers', 'text_domain' ),
-			'search_items'          => __( 'Search Retailers', 'text_domain' ),
-			'not_found'             => __( 'Not found', 'text_domain' ),
-			'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
-			'featured_image'        => __( 'Featured Image', 'text_domain' ),
-			'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
-			'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
-			'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
-			'insert_into_item'      => __( 'Insert into item', 'text_domain' ),
-			'uploaded_to_this_item' => __( 'Uploaded to this item', 'text_domain' ),
-			'items_list'            => __( 'Items list', 'text_domain' ),
-			'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
-			'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
-		);
-		$args = array(
-			'label'                 => __( 'Retailer', 'text_domain' ),
-			'description'           => __( 'The current list of Retailers', 'text_domain' ),
-			'labels'                => $labels,
-			'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'page-attributes' ),
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 20,
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => false,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			// This is where we add taxonomies to our CPT
-			'taxonomies'          => array( 'category' ),
-			'capability_type'       => 'page',
-		);
-		register_post_type( 'Retailers', $args );
-
-	}
-	add_action( 'init', 'Retailers', 0 );
-
-}
-
-
 function hero_information( $meta_boxes ) {
 	$prefix = 'prefix-';
 
@@ -343,45 +280,41 @@ function contactUs() { ?>
 <?php }
 
 function weekly_retailer() { ?>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXYv1Bj5EBvwBpyI0nOPwnnwihbgqaMsY"></script>
-    <script type="text/javascript" src="<?php echo get_template_directory_uri() . '/js/retailer-map.js' ?>"></script>
 	<div class="w-section retailer-week">
         <div class="w-row">
             <div class="w-col w-col-12 retailer-week-container">
 	            <?php query_posts(array(
 		            'posts_per_page' => 1,
-		            'post_type' => 'retailers',
-		            'orderby' => 'post_date',
-		            'meta_key' => 'featured_retailer', // the name of the custom field
-		            'meta_compare' => '=', // the comparison (e.g. equals, does not equal, etc...)
-		            'meta_value' => 1, // the value to which the custom field is compared. In my case, 'featured_product' was a true/false checkbox. If you had a custom field called 'color' and wanted to show only those blue items, then the meta_value would be 'blue'
-		            'paged' => $paged
+		            'post_type' => 'wpsl_stores',
+		            'orderby' => 'rand'
 	            )); ?>
 	            <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
                 <div class="w-col w-col-6 featured-retailer-background retailer-half" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo get_the_post_thumbnail_url('', 'full'); ?>'); ">
                         <div class="w-section">
                             <div class="retailer-container">
-                                <div id="post-<?php the_ID(); ?>" class="cpt">
-                                    <h2 class="featured-retailer-title"><?php the_title(); ?></h2>
-                                    <p class="featured-retailer-address"><?php echo rwmb_meta('retailer_address') ?></p>
-                                    <div class="green-line"></div>
-                                    <a href="tel:<?php echo rwmb_meta('retailer_phone_number'); ?>"><p class="featured-retailer-phone"><?php echo rwmb_meta('retailer_phone_number'); ?></p></a>
+                                <div class="retailer-information-container">
+                                    <div class="w-col w-col-12"><h2 class="featured-retailer-title"><?php the_title(); ?></h2></div>
+                                    <div class="w-col w-col-12 retailer-details">
+                                        <div class="featured-retailer-address-container">
+                                            <?php
+                                                $streetAddress = get_post_meta( get_the_ID(), 'wpsl_address', TRUE );
+                                                $city = get_post_meta( get_the_ID(), 'wpsl_city', TRUE );
+                                                $state = get_post_meta( get_the_ID(), 'wpsl_state', TRUE );
+                                                $zip = get_post_meta( get_the_ID(), 'wpsl_zip', TRUE );
+                                                $phone = get_post_meta( get_the_ID(), 'wpsl_phone', TRUE );
+                                            ?>
+                                            <a href=""><p class="featured-retailer-address"><?php echo $streetAddress; ?><br />
+                                            <?php echo $city . ', ' . $state . ' ' . $zip ?></p></a>
+                                        </div>
+                                        <div class="green-line"></div>
+                                        <a href="tel:<?php echo $phone ?>"><p class="featured-retailer-phone"><?php echo $phone ?></p></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 </div>
                 <div class="w-col w-col-6 retailer-half">
-                    <?php
-                    $args = array(
-	                    'width'        => '100%',
-	                    'height'       => '400px',
-	                    'zoom'         => 14,
-	                    'marker'       => true,
-	                    'marker_title' => 'Click me',
-	                    'info_window'  => '<h3>Title</h3><p>Content</p>.',
-                    );
-                    echo rwmb_meta( 'retailer_map_location', $args );
-                    ?>
+                    <?php echo do_shortcode('[wpsl_map]'); ?>
                 </div>
 	            <?php endwhile; ?>
 	            <?php wp_reset_query(); ?>

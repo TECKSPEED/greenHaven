@@ -1412,6 +1412,10 @@ a img.aligncenter {
     }
 }
 
+.retailer-information-container .wpsl-opening-hours {
+    margin: 0 auto;
+}
+
 @media (min-width: 992px) {
     nav ul li.showing ul {
         display: block;
