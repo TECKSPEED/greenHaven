@@ -707,6 +707,7 @@ nav ul li ul li:hover {
 .our-strains {
     padding-top: 20px;
     padding-bottom: 40px;
+    min-height: 225px;
 }
 
 .featured-retailer-address, .featured-retailer-phone {
@@ -1413,6 +1414,10 @@ a img.aligncenter {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+.retailer-information-container .wpsl-opening-hours {
+    margin: 0 auto;
 }
 
 @media (min-width: 992px) {
