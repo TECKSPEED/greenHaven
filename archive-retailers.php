@@ -29,7 +29,6 @@ get_hero(); ?>
 				<?php endwhile; ?>
 			</div>
 			<?php wp_reset_query(); ?>
-            <?php echo do_shortcode('[wpsl]'); ?>
 		</div>
 	</div>
 </div>

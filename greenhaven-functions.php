@@ -1,15 +1,5 @@
 <?php
 
-function my_acf_google_map_api( $api ){
-
-	$api['key'] = ' AIzaSyD4o2kOLRroPE8-mQkg4JoVFxOUtgA2gW0 ';
-
-	return $api;
-
-}
-
-add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
-
 //Strains CPT
 if ( ! function_exists('strains') ) {
 
@@ -335,7 +325,7 @@ function contactUs() { ?>
 			<div class="w-row">
 				<div class="w-col w-col-12 contact-us-container">
 					<p class="contact-us-p"><?php echo $callout_saying ?></p>
-					<a href="<?php echo $button_link ?>" class="button"><?php echo $callout_button_text?></a>
+					<a href="<?php echo get_page_link($button_link) ?>" class="button"><?php echo $callout_button_text?></a>
 				</div>
 			</div>
 		</div>
@@ -343,8 +333,6 @@ function contactUs() { ?>
 <?php }
 
 function weekly_retailer() { ?>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXYv1Bj5EBvwBpyI0nOPwnnwihbgqaMsY"></script>
-    <script type="text/javascript" src="<?php echo get_template_directory_uri() . '/js/retailer-map.js' ?>"></script>
 	<div class="w-section retailer-week">
         <div class="w-row">
             <div class="w-col w-col-12 retailer-week-container">
@@ -358,14 +346,21 @@ function weekly_retailer() { ?>
 		            'paged' => $paged
 	            )); ?>
 	            <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-                <div class="w-col w-col-6 featured-retailer-background retailer-half" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('<?php echo get_the_post_thumbnail_url('', 'full'); ?>'); ">
+                <div class="w-col w-col-6 featured-retailer-background retailer-half">
                         <div class="w-section">
                             <div class="retailer-container">
                                 <div id="post-<?php the_ID(); ?>" class="cpt">
                                     <h2 class="featured-retailer-title"><?php the_title(); ?></h2>
-                                    <p class="featured-retailer-address"><?php echo rwmb_meta('retailer_address') ?></p>
+                                    <?php
+                                        $address = str_replace(array(' ', ','), array('+', ''), rwmb_meta('retailer_address'));
+                                    ?>
+                                    <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $address ?>" target="_blank">
+                                        <p class="featured-retailer-address"><?php echo rwmb_meta('retailer_address') ?></p>
+                                    </a>
                                     <div class="green-line"></div>
-                                    <a href="tel:<?php echo rwmb_meta('retailer_phone_number'); ?>"><p class="featured-retailer-phone"><?php echo rwmb_meta('retailer_phone_number'); ?></p></a>
+                                    <a href="tel:<?php echo rwmb_meta('retailer_phone_number'); ?>">
+                                        <p class="featured-retailer-phone"><?php echo rwmb_meta('retailer_phone_number'); ?></p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -490,7 +485,7 @@ function get_hero() {
             <h1 class="hero-h1"><?php echo $hero_title; ?></h1>
             <p class="hero-supporting-text"><?php echo $hero_supporting_text; ?></p>
             <?php if (!($button_text == "")) {?>
-                <a class="button" href="<?php echo $button_link; ?>"><?php echo $button_text; ?></a>
+                <a class="button" href="<?php echo get_page_link($button_link); ?>"><?php echo $button_text; ?></a>
             <?php } ?>
         </div>
     </div>
@@ -516,7 +511,9 @@ function get_product_hero() {
                             <h1 class="product-hero-h1"><?php echo $tag->name; ?></h1>
                         <?php }
                     }
-                }
+                } else { ?>
+                    <h1 class="product-hero-h1"><?php echo the_title(); ?></h1>
+                <?php }
             ?>
         </div>
     </div>
@@ -553,7 +550,6 @@ function featured_retailer( $meta_boxes ) {
 add_filter( 'rwmb_meta_boxes', 'featured_retailer' );
 
 function retailer_information( $meta_boxes ) {
-	$prefix = '';
 
 	$meta_boxes[] = array(
 		'id' => 'retailer_information',
@@ -564,29 +560,34 @@ function retailer_information( $meta_boxes ) {
 		'autosave' => false,
 		'fields' => array(
 			array(
-				'id' => $prefix . 'retailer_address',
+				'id' => 'retailer_address',
 				'type' => 'textarea',
 				'name' => esc_html__( 'Retailer Address', 'metabox-online-generator' ),
 			),
 			array(
-				'id' => $prefix . 'retailer_phone_number',
+				'id' => 'retailer_phone_number',
 				'type' => 'text',
 				'name' => esc_html__( 'Retailer Phone Number', 'metabox-online-generator' ),
 				'desc' => esc_html__( 'Enter the phone number for the retailer', 'metabox-online-generator' ),
 			),
 			array(
-				'id' => $prefix . 'location_address',
+				'id' => 'retailer_website',
+				'type' => 'text',
+				'name' => esc_html__( 'Retailer Website', 'metabox-online-generator' ),
+				'desc' => esc_html__( 'Enter the website for the retailer', 'metabox-online-generator' ),
+			),
+			array(
+				'id' => 'location_address',
 				'type' => 'text',
 				'name' => esc_html__( 'Retailer Address', 'metabox-online-generator' ),
 			),
 			array(
-				'id' => $prefix . 'retailer_map_location',
+				'id' => 'retailer_map_location',
 				'type' => 'map',
 				// Default location: 'latitude,longitude[,zoom]' (zoom is optional)
-				'std'           => '-6.233406,-35.049906,15',
 				'name' => esc_html__( 'Retailer Location', 'metabox-online-generator' ),
 				'address_field' => 'location_address',
-				'api_key' => 'AIzaSyCCAfEfZtd5LKpHX4nmZMYL2EgnOP_bq7I',
+				'api_key' => 'AIzaSyDpcZgS4o3JAwJud1noPdSBVaDOAU9v3TU',
 			),
 		),
 	);

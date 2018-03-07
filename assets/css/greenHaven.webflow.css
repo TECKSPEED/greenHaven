@@ -85,6 +85,10 @@ a:hover {
     z-index: 9999;
 }
 
+.featured-retailer-background {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/weekly-retailer-background.jpg');
+}
+
 .auth-form {
     z-index: 99999;
     color: white;
@@ -611,13 +615,13 @@ nav ul li ul li:hover {
   text-align: center;
 }
 
-.strain-container, .retailer-container {
+.strain-container {
     opacity: 1;
     color:#333;
     padding-bottom: 30px;
 }
 
-.strain-container:hover, .retailer-container:hover {
+.strain-container:hover {
     opacity: .8;
     color: #e29631;
     transition: all .3s;
@@ -627,7 +631,7 @@ nav ul li ul li:hover {
     -webkit-transition: all .3s;
 }
 
-.strain-container:hover p, .retailer-container:hover p {
+.strain-container:hover p, .retailer-container p:hover {
     color: #e29631;
     transition: all .3s;
     -ms-transition: all .3s;
@@ -934,10 +938,6 @@ a.quote-cta:hover {
 .slick-prev, .slick-next {
     background-color:#4ab95b;
     color: #4ab95b;
-}
-
-.retailer-container{
-    background:
 }
 
 /* Home page featured slider
@@ -1363,21 +1363,21 @@ a img.aligncenter {
     color: #FB8D00;
 }
 
-.strain-attributes {
+.strain-attributes, .retailer-attributes {
     text-align: center;
 }
 
-.strain-attributes p {
+.strain-attributes p, .retailer-attributes p {
     display: inline-block;
     vertical-align: middle;
     padding-left: 5px;
 }
 
-.strain-attributes .lineage, .strain-attributes .lineage p {
+.strain-attributes .lineage, .strain-attributes .lineage p, .retailer-attributes .website, .retailer-attributes .website p {
     color: #4ab95b;
 }
 
-.strain-attributes .aroma, .strain-attributes .aroma p {
+.strain-attributes .aroma, .strain-attributes .aroma p, .retailer-attributes .phone-number, .retailer-attributes .phone-number p {
     color: #FB8D00;
 }
 
